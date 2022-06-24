@@ -8,6 +8,5 @@ def add(dic, key):
         )
         
 def delete(key):
-  myQuery ={"key":key}
-  filter.delete_one(myQuery)
+  filter.delete_one({"key":key})
 
