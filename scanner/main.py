@@ -43,6 +43,6 @@ while True:
           break
     ordlst = json.loads(orders)
     bill="FC BIll"
-      for x in ordlst["orders"]:
+    for x in ordlst["orders"]:
             bill+=f"\n{x} {ordlst["orders"][x]}"
-      window['-TXT-'].update("Select file or folder")
+    window['-TXT-'].update("Select file or folder")
