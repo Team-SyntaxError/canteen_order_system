@@ -10,7 +10,7 @@ sg.theme("DarkGreen")
 layout = [
     [sg.Text('FC BVRIT', text_color="Red")],
     [sg.Checkbox('PIZZA', default=False, key="PIZZA"),sg.Input(size=(10), key="pizza") ],
-    [sg.Button('BILL IT')]
+    [sg.Button('BILL IT')],
     [sg.Text('TOTAL: ', text_color="Red"), sg.Input("", key='-FINAL-')],
 
     [sg.Cancel()],
