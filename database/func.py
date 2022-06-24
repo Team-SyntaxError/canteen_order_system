@@ -4,5 +4,5 @@ filter = db_x["FC"]
 
 def add(dic, pwd):
     filter.insert_one(
-            {"dict": dic, "pwd": pwd}
+            {"dict": dic, "pwd": pwd, "isvalid":True}
         )
