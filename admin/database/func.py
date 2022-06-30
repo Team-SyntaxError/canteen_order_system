@@ -11,8 +11,14 @@ def list_recipes():
     cursor = filter.find({})
     return cursor
 
-def update_recipe(receipe_dict):
+def update_recipe_stock(receipe_dict):
     receipe=list(receipe_dict.keys())[0]
     filtere = { "recipe": receipe }
     newvalues = { "$set": { "stock": receipe_dict.get(receipe) } }
+    filter.update_one(filtere,newvalues)
+
+def update_recipe_price(receipe_dict):
+    receipe=list(receipe_dict.keys())[0]
+    filtere = { "recipe": receipe }
+    newvalues = { "$set": { "price": receipe_dict.get(receipe) } }
     filter.update_one(filtere,newvalues)
