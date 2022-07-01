@@ -1,6 +1,6 @@
 import secrets
 import string
-from database.func import add
+from database.func import add,checker,update_valid,is_valid
 import PySimpleGUI as sg
 import cv2
 import numpy as np
@@ -46,9 +46,18 @@ while True:
                 break
         lol=lol.replace("'", '"')
         lol = json.loads(lol)
+        key=lol.get("key")
         res=lol["dict"]
-        print(res)
-        txt="RECEIPES ORDER LIST:\n"
-        for x in res:
-            txt+=f"{x}\t\t{res.get(x)}"
-        print(txt)
+        is_parcel=lol.get("is_parcel")
+        if checker(key) and is_valid(key).get("isvalid")==True:
+            txt="RECEIPES ORDER LIST:\n\nRECEIPE\t\tQUANTITY\n"
+            for x in res:
+                txt+=f"{x}\t\t{res.get(x)}\n"
+            if is_parcel:
+                txt+="\nTake Away"
+            else:
+                txt+="\nHave it here"
+            print(txt)
+            update_valid(key)
+        else:
+            print("key is invalid") 

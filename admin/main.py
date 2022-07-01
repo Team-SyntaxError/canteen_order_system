@@ -30,7 +30,7 @@ layout.append([sg.InputText(size=(10),key="prod_name"),sg.Text("\t"),sg.InputTex
 layout.append([sg.Button('Add Product'),sg.Text("  "),sg.Button('Remove Product')])
 layout.append([sg.Text(key='-msggg-', text_color="Red")])
 layout.append([sg.Cancel()])
-window = sg.Window('FC ORDER SYSTEM', layout,icon=r'C:\Users\chsai\Desktop\folder_locker\enc.ico', size=(600, 400))
+window = sg.Window('FC ORDER SYSTEM', layout,icon=r'C:\Users\chsai\Desktop\folder_locker\enc.ico', size=(1000, 700))
 while True:
     event, values = window.read()
     if event is None or event == 'Cancel':

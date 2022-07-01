@@ -12,4 +12,13 @@ def delete(key):
 
 
 def checker(key):
-  return filter.find_one({},{"key":key})
+  return filter.find_one({"key":key})
+
+
+def is_valid(key):
+  return filter.find_one({ "key": key })
+
+def update_valid(key):
+    filtere = { "key": key }
+    newvalues = { "$set": { "isvalid": False} }
+    filter.update_one(filtere,newvalues)
