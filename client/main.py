@@ -9,7 +9,9 @@ def passgen():
     password = ''.join(secrets.choice(alphabet) for i in range(60))
     password = password.replace("'", '"')
     return password.replace('"',"*")
-sg.theme("DarkBlue2")
+sg.theme("DarkTeal10")
+font = ("Helvetica", 13)
+sg.set_options(font=font)
 recipes={}
 all = list_recipes()
 for x in all:
@@ -24,9 +26,17 @@ for x in recipes:
     space=len(x)-def_space
     space=abs(space)
     if recipes.get(x).get("is_special")==True:
-        lst_spcl.append([sg.Text(x,text_color="white"),sg.Text(" "*def_space),sg.Text(recipes.get(x).get("price")),sg.Text(" "*def_space),sg.Text(recipes.get(x).get("stock")),sg.Text("  "*def_space),sg.InputText(size=(10), key=x,default_text="0")])
+        nme=x.ljust(24," ")
+        nme1=recipes.get(x).get("price").strip().ljust(28," ")
+        nme2=recipes.get(x).get("stock").strip().ljust(35," ")
+        lol = nme+nme1+nme2
+        lst_spcl.append([sg.Text(lol,text_color="white"),sg.InputText(size=(10), key=x,default_text="0")])
     else:
-        lst.append([sg.Text(x,text_color="white"),sg.Text(" "*def_space),sg.Text(recipes.get(x).get("price")),sg.Text(" "*def_space),sg.Text(recipes.get(x).get("stock")),sg.Text("  "*def_space),sg.InputText(size=(10), key=x,default_text="0")])
+        nme=x.ljust(24," ")
+        nme1=recipes.get(x).get("price").strip().ljust(28," ")
+        nme2=recipes.get(x).get("stock").strip().ljust(35," ")
+        lol = nme+nme1+nme2
+        lst.append([sg.Text(lol,text_color="white"),sg.InputText(size=(10), key=x,default_text="0")])
 
 
 layout = [
@@ -34,6 +44,7 @@ layout = [
     [sg.Text('Regular Items',text_color="pink")],
     [sg.Text("Product\t\tPrice\t\tQuantity Avaiable\t\tQuantity Ordering", text_color="yellow")]
 ]
+
 for x in lst:
     layout.append(x)
 layout.append([sg.Text('Special Items', text_color="pink")])
@@ -46,6 +57,7 @@ layout.append([sg.Text(key='-bill-', text_color="yellow")])
 layout.append([sg.Text('TOTAL: ', text_color="yellow"), sg.Input("", key='-ORDER-')])
 layout.append([sg.Checkbox('parcel it?', default=False,key="is_parcel")])
 layout.append([sg.Button('ORDER',button_color="green")])
+layout.append([sg.Text(key='-ttt-', text_color="white")])
 layout.append([sg.Cancel(button_color="green")])
 window = sg.Window('FC ORDER SYSTEM', layout,icon=r'C:\Users\chsai\Desktop\folder_locker\enc.ico', size=(1000, 700))
 print()
@@ -74,18 +86,25 @@ while True:
             
             window["-bill-"].update(txet)
     if event=="ORDER":
+        overflow=False
         lst={}
         for x in plain_receipes: 
             if int(values[x])!=0:
-                lst[x]=int(values[x])
-        key = passgen()
-        add(lst,key,values['is_parcel'])
-        order = {"key":key, "dict":lst}
-        print(order)
-        qr_img = qrcode.make(str(order))
-        qr_img.save("qr-img.jpg")
-        im = Image.open(r"qr-img.jpg")
-        im.show()
+                if int(values[x])>int(recipes.get(x).get("stock")):
+                    window["-ttt-"].update(f"{x}'s entered stock is more than avaiable")
+                    overflow=True
+                    break
+                else:
+                    lst[x]=int(values[x])
+        if not overflow:
+            key = passgen()
+            add(lst,key,values['is_parcel'])
+            order = {"key":key, "dict":lst}
+            print(order)
+            qr_img = qrcode.make(str(order))
+            qr_img.save("qr-img.jpg")
+            im = Image.open(r"qr-img.jpg")
+            im.show()
 
 
                 

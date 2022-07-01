@@ -1,4 +1,5 @@
 
-import PySimpleGUI as sg
-  
-sg.theme_previewer()
+try:
+    pint("eref")
+except:
+    print("error")

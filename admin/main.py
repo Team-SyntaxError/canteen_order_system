@@ -3,18 +3,22 @@ import string
 from database.func import add_recipe,list_recipes,update_recipe_stock,update_recipe_price,remove_recipe,is_recipe
 import PySimpleGUI as sg
 sg.theme("DarkGreen")
+font = ("Helvetica", 13)
+sg.set_options(font=font)
 recipes={}
 all = list_recipes()
 for x in all:
     recipes[x.get("recipe")]={"stock":x.get("stock"),"price":x.get("price")}
 plain_receipes=[]
 lst=[]
-def_space=15
+
 for x in recipes:
     plain_receipes.append(x)
-    space=len(x)-def_space
-    space=abs(space)
-    lst.append([sg.Text(x),sg.Text(" "*space),sg.Text(recipes.get(x).get("stock"),key=f"-{x}_stock-"),sg.Text(" "*def_space),sg.InputText(size=(10), key=f"{x}_stock"),sg.Text(" "*def_space),sg.Text(recipes.get(x).get("price"),key=f"-{x}_price-"),sg.Text(" "*def_space),sg.InputText(size=(10), key=f"{x}_price")])
+    nme=x.ljust(24," ")
+    nme1=recipes.get(x).get("price").strip().ljust(22," ")
+    nme2=recipes.get(x).get("stock").strip().ljust(24," ")
+    nme3="".ljust(17," ")
+    lst.append([sg.Text(nme),sg.Text(nme2,key=f"-{x}_stock-"),sg.InputText("",size=(10), key=f"{x}_stock"),sg.Text(nme3),sg.Text(nme1,key=f"-{x}_price-"),sg.InputText(size=(10), key=f"{x}_price")])
 
 layout = [    
     [sg.Text('FC BVRIT ADMIN PANEL', text_color="Red",justification="5")],
@@ -26,7 +30,7 @@ layout.append([sg.Button('UPDATE STOCK')])
 layout.append([sg.Text(key='-update-', text_color="Red")])
 layout.append([sg.Text('Add/Remove Products', text_color="Red")])
 layout.append([sg.Text("Product\t\t\tQuantity\t\t\tPrice")])
-layout.append([sg.InputText(size=(10),key="prod_name"),sg.Text("\t"),sg.InputText(size=(10),key="prod_quan"),sg.Text("\t"),sg.InputText(size=(10),key="prod_price"),sg.Checkbox('is special?', default=True,key="is_special")])
+layout.append([sg.InputText(size=(10),key="prod_name"),sg.Text("\t"),sg.InputText(size=(10),key="prod_quan"),sg.Text("\t"),sg.InputText(size=(10),key="prod_price"),sg.Checkbox('is special?', default=False,key="is_special")])
 layout.append([sg.Button('Add Product'),sg.Text("  "),sg.Button('Remove Product')])
 layout.append([sg.Text(key='-msggg-', text_color="Red")])
 layout.append([sg.Cancel()])
@@ -61,14 +65,17 @@ while True:
                     if values[f"{x}_stock"].isdigit() ==False:
                         window[f"-update-"].update("Quantity and price should be a number")
                     else:
+                        
+                        nme2=values.get(f"{x}_stock").ljust(24," ")
                         update_recipe_stock({x:values.get(f"{x}_stock")})
-                        window[f"-{x}_stock-"].update(values.get(f"{x}_stock"))
+                        window[f"-{x}_stock-"].update(nme2)
                         window["-update-"].update("Server updated successfully.")
                 if values[f"{x}_price"]!='':
                     if values[f"{x}_price"].isdigit() ==False:
                         window[f"-update-"].update("Quantity and price should be a number")
                     else:
+                        nme1=values.get(f"{x}_price").ljust(22," ")
                         update_recipe_price({x:values.get(f"{x}_price")})
-                        window[f"-{x}_price-"].update(values.get(f"{x}_price"))
+                        window[f"-{x}_price-"].update(nme1)
                         window["-update-"].update("Server updated successfully.")
         
