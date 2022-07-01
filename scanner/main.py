@@ -47,6 +47,8 @@ while True:
         lol=lol.replace("'", '"')
         lol = json.loads(lol)
         res=lol["dict"]
+        print(res)
         txt="RECEIPES ORDER LIST:\n"
         for x in res:
             txt+=f"{x}\t\t{res.get(x)}"
+        print(txt)

@@ -2,10 +2,21 @@
 from database import db_x
 
 filter = db_x["RECIPE"]
-def add_recipe(recipe,stock):
+def add_recipe(recipe,stock,price,is_special):
     filter.insert_one(
-            {"recipe": recipe, "stock": stock}
+            {"recipe": recipe, "stock": stock, "price": price,"is_special":is_special}
         )
+
+def remove_recipe(recipe):
+    filter.delete_one(
+            {"recipe": recipe}
+        )
+
+def is_recipe(recipe):
+    lol = filter.find_one(
+            {"recipe": recipe}
+        )
+    return lol
 
 def list_recipes():
     cursor = filter.find({})
