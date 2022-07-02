@@ -117,16 +117,20 @@ while True:
                     overflow=False
         if not overflow:
             key = passgen()
-            add(lst,key,values['is_parcel'])
-            order = {"key":key, "dict":lst, "is_parcel":str(values['is_parcel'])}
-            db.insert({"key":key})
-            # print(order)
-            print(stock_update)
-            update_recipe_stock(stock_update)
-            qr_img = qrcode.make(str(order))
-            qr_img.save("qr-img.jpg")
-            im = Image.open(r"qr-img.jpg")
-            im.show()
+            if len(lst) == 0:
+                window["-ttt-"].update("Cart is empty")
+            else:
+                window["-ttt-"].update("")
+                add(lst,key,values['is_parcel'])
+                order = {"key":key, "dict":lst, "is_parcel":str(values['is_parcel'])}
+                db.insert({"key":key})
+                # print(order)
+                print(stock_update)
+                update_recipe_stock(stock_update)
+                qr_img = qrcode.make(str(order))
+                qr_img.save("qr-img.jpg")
+                im = Image.open(r"qr-img.jpg")
+                im.show()
 
 
                 
