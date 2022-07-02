@@ -77,10 +77,10 @@ while True:
                 else:
                     my_order+=f"\n\nOrder Number: {num}\n"
                 num+=1
-                # print(p.get("dict"))
                 for x in p.get("dict"):
                     my_order+=f"{x}     {p.get('dict').get(x)}\n"
-        sg.Popup(my_order)
+                my_order+=f"Key:  {p.get('key')}"
+        sg.popup_scrolled(my_order)
     if event=="BILL IT":
         vle=0
         for x in plain_receipes:
