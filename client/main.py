@@ -32,13 +32,13 @@ for x in recipes:
         nme1=recipes.get(x).get("price").strip().ljust(28," ")
         nme2=recipes.get(x).get("stock").strip().ljust(35," ")
         lol = nme+nme1+nme2
-        lst_spcl.append([sg.Text(lol,text_color="white"),sg.InputText(size=(10), key=x,default_text="0")])
+        lst_spcl.append([sg.Text(lol,text_color="white"),sg.InputText(size=(10), key=x,)])
     else:
         nme=x.ljust(24," ")
         nme1=recipes.get(x).get("price").strip().ljust(28," ")
         nme2=recipes.get(x).get("stock").strip().ljust(35," ")
         lol = nme+nme1+nme2
-        lst.append([sg.Text(lol,text_color="white"),sg.InputText(size=(10), key=x,default_text="0")])
+        lst.append([sg.Text(lol,text_color="white"),sg.InputText(size=(10), key=x,)])
 
 layout = [
     [sg.Text('FC BVRIT', text_color="cyan",justification="5")],
@@ -61,7 +61,7 @@ layout.append([sg.Button('ORDER',button_color="green")])
 layout.append([sg.Text(key='-ttt-', text_color="white")])
 layout.append([sg.Button('My Orders')])
 layout.append([sg.Cancel(button_color="green")])
-window = sg.Window('FC ORDER SYSTEM', layout,icon=r'C:\Users\chsai\Desktop\folder_locker\enc.ico', size=(1000, 700))
+window = sg.Window('FC ORDER SYSTEM', layout,icon=r'C:\Users\chsai\Desktop\folder_locker\enc.ico', size=(1000, 900))
 while True:
     event, values = window.read()
     if event is None or event == 'Cancel':
@@ -84,20 +84,20 @@ while True:
     if event=="BILL IT":
         vle=0
         for x in plain_receipes:
-            if int(values[x])!=0:
+            if (values[x])!='':
                 vle+=int(values[x])*int(recipes.get(x).get("price"))
         window['-ORDER-'].update(vle)
     if event=="ANALYSE BILL":
         vle=0
         for x in plain_receipes:
-            if int(values[x])!=0:
+            if (values[x])!='':
                 vle+=int(values[x])
         if vle==0:
             window["-bill-"].update("NOTHING TO ANALYSE, CART IS EMPTY.")
         else:
             txet="BILL ANALYSIS\nPRODUCT NAME\t\tRATE\t\tQUANTITY\t\tPRICE"
             for x in plain_receipes:
-                if int(values[x])!=0:
+                if (values[x])!='':
                     txet+=f'\n{x.upper()}\t\t\t{int(recipes.get(x).get("price"))}\t\t{int(values[x])}\t\t\t{int(values[x])*int(recipes.get(x).get("price"))}'
             
             window["-bill-"].update(txet)
@@ -106,7 +106,7 @@ while True:
         lst={}
         stock_update={}
         for x in plain_receipes: 
-            if int(values[x])!=0:
+            if (values[x])!='':
                 if int(values[x])>int(recipes.get(x).get("stock")):
                     window["-ttt-"].update(f"{x}'s entered stock is more than avaiable")
                     overflow=True
@@ -120,7 +120,7 @@ while True:
             if len(lst) == 0:
                 window["-ttt-"].update("Cart is empty")
             else:
-                window["-ttt-"].update("")
+                window["-ttt-"].update("Cart is empty")
                 add(lst,key,values['is_parcel'])
                 order = {"key":key, "dict":lst, "is_parcel":str(values['is_parcel'])}
                 db.insert({"key":key})
