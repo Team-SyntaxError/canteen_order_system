@@ -118,7 +118,7 @@ while True:
         if not overflow:
             key = passgen()
             add(lst,key,values['is_parcel'])
-            order = {"key":key, "dict":lst}
+            order = {"key":key, "dict":lst, "is_parcel":str(values['is_parcel'])}
             db.insert({"key":key})
             # print(order)
             print(stock_update)

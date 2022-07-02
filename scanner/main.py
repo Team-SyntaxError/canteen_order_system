@@ -45,6 +45,7 @@ while True:
                 cv2.destroyWindow('Image')
                 break
         lol=lol.replace("'", '"')
+        print(lol)
         lol = json.loads(lol)
         key=lol.get("key")
         res=lol["dict"]
@@ -53,7 +54,7 @@ while True:
             txt="RECEIPES ORDER LIST:\n\nRECEIPE\t\tQUANTITY\n"
             for x in res:
                 txt+=f"{x}\t\t{res.get(x)}\n"
-            if is_parcel:
+            if is_parcel=="True":
                 txt+="\nTake Away"
             else:
                 txt+="\nHave it here"
