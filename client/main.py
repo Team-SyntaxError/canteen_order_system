@@ -1,9 +1,11 @@
 import secrets
 import string
-from database.func import add,list_recipes
+from database.func import add,list_recipes,key_info,update_recipe_stock
 import PySimpleGUI as sg
 import qrcode  
 from PIL import Image
+from tinydb import TinyDB, Query
+db = TinyDB('db.json')
 def passgen():
     alphabet = string.ascii_letters + string.digits + string.punctuation
     password = ''.join(secrets.choice(alphabet) for i in range(60))
@@ -16,7 +18,7 @@ recipes={}
 all = list_recipes()
 for x in all:
     recipes[x.get("recipe")]={"stock":x.get("stock"),"price":x.get("price"), "is_special":x.get("is_special")}
-print(recipes)
+# print(recipes)
 lst=[]
 lst_spcl=[]
 def_space=15
@@ -38,7 +40,6 @@ for x in recipes:
         lol = nme+nme1+nme2
         lst.append([sg.Text(lol,text_color="white"),sg.InputText(size=(10), key=x,default_text="0")])
 
-
 layout = [
     [sg.Text('FC BVRIT', text_color="cyan",justification="5")],
     [sg.Text('Regular Items',text_color="pink")],
@@ -58,13 +59,28 @@ layout.append([sg.Text('TOTAL: ', text_color="yellow"), sg.Input("", key='-ORDER
 layout.append([sg.Checkbox('parcel it?', default=False,key="is_parcel")])
 layout.append([sg.Button('ORDER',button_color="green")])
 layout.append([sg.Text(key='-ttt-', text_color="white")])
+layout.append([sg.Button('My Orders')])
 layout.append([sg.Cancel(button_color="green")])
 window = sg.Window('FC ORDER SYSTEM', layout,icon=r'C:\Users\chsai\Desktop\folder_locker\enc.ico', size=(1000, 700))
-print()
 while True:
     event, values = window.read()
     if event is None or event == 'Cancel':
         break
+    if event=="My Orders":
+        my_order="Your Order List is: \n"
+        num=1
+        for item in db:
+            p = key_info(item.get("key"))
+            if p:
+                if num<1:
+                    my_order+=f"Order Number: {num}\n"
+                else:
+                    my_order+=f"\n\nOrder Number: {num}\n"
+                num+=1
+                # print(p.get("dict"))
+                for x in p.get("dict"):
+                    my_order+=f"{x}     {p.get('dict').get(x)}\n"
+        sg.Popup(my_order)
     if event=="BILL IT":
         vle=0
         for x in plain_receipes:
@@ -88,6 +104,7 @@ while True:
     if event=="ORDER":
         overflow=False
         lst={}
+        stock_update={}
         for x in plain_receipes: 
             if int(values[x])!=0:
                 if int(values[x])>int(recipes.get(x).get("stock")):
@@ -96,11 +113,16 @@ while True:
                     break
                 else:
                     lst[x]=int(values[x])
+                    stock_update[x]=int(recipes.get(x).get("stock"))-int(values[x])
+                    overflow=False
         if not overflow:
             key = passgen()
             add(lst,key,values['is_parcel'])
             order = {"key":key, "dict":lst}
-            print(order)
+            db.insert({"key":key})
+            # print(order)
+            print(stock_update)
+            update_recipe_stock(stock_update)
             qr_img = qrcode.make(str(order))
             qr_img.save("qr-img.jpg")
             im = Image.open(r"qr-img.jpg")
