@@ -55,10 +55,10 @@ while True:
             for x in res:
                 txt+=f"{x}\t\t{res.get(x)}\n"
             if is_parcel=="True":
-                txt+="\nTake Away"
+                txt+="\nOrder Type: Take Away"
             else:
-                txt+="\nHave it here"
+                txt+=f"\nOrder Type: Dine-IN"
             print(txt)
             update_valid(key)
         else:
-            print("key is invalid") 
+            print("OR is used or invalid") 
