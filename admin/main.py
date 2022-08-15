@@ -22,7 +22,7 @@ for x in recipes:
     lst.append([sg.Text(nme),sg.Text(nme2,key=f"-{x}_stock-"),sg.InputText("",size=(10), key=f"{x}_stock"),sg.Text(nme3),sg.Text(nme1,key=f"-{x}_price-"),sg.InputText(size=(10), key=f"{x}_price")])
 
 layout = [    
-    [sg.Text('FC BVRIT ADMIN PANEL', text_color="Red",justification="5")],
+    [sg.Text('CANTEEN ADMIN PANEL', text_color="Red",justification="5")],
     [sg.Text("Product\t\tQuantity\t\tNew Quantity\t\tPrice\t\tNew Price")]
 ]
 for x in lst:
@@ -36,7 +36,7 @@ layout.append([sg.Button('Add Product'),sg.Text("  "),sg.Button('Remove Product'
 layout.append([sg.Text(key='-msggg-', text_color="Red")])
 layout.append([sg.Button('View Orders')])
 layout.append([sg.Cancel()])
-window = sg.Window('FC ORDER SYSTEM', layout,icon=r'C:\Users\chsai\Desktop\folder_locker\enc.ico', size=(1000, 700))
+window = sg.Window('CANTEEN ORDER SYSTEM', layout,icon=r'C:\Users\chsai\Desktop\folder_locker\enc.ico', size=(1000, 700))
 while True:
     event, values = window.read()
     if event is None or event == 'Cancel':

@@ -24,12 +24,12 @@ def decoder(image):
         
 sg.theme("DarkGreen")
 layout = [
-    [sg.Text('FC QR SCANNER', text_color="Red")],
+    [sg.Text('CANTTEN SCANNER', text_color="Red")],
     [sg.Button('SCAN QR')],
     [sg.Text(key='-TXT-', text_color="Red")],
     [sg.Cancel()],
 ]
-window = sg.Window('FC ORDER SYSTEM', layout,icon=r'C:\Users\chsai\Desktop\folder_locker\enc.ico', size=(500, 500))
+window = sg.Window('CANTEEN ORDER SYSTEM', layout,icon=r'C:\Users\chsai\Desktop\folder_locker\enc.ico', size=(500, 500))
 while True:
     event, values = window.read()
     if event is None or event == 'Cancel':

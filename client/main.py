@@ -41,7 +41,7 @@ for x in recipes:
         lst.append([sg.Text(lol,text_color="white"),sg.InputText(size=(10), key=x,)])
 
 layout = [
-    [sg.Text('FC BVRIT', text_color="cyan",justification="5")],
+    [sg.Text('FOOD COURT', text_color="cyan",justification="5")],
     [sg.Text('Regular Items',text_color="pink")],
     [sg.Text("Product\t\tPrice\t\tQuantity Avaiable\t\tQuantity Ordering", text_color="yellow")]
 ]
@@ -56,12 +56,12 @@ layout.append([sg.Button('BILL IT',button_color="green")])
 layout.append([sg.Button('ANALYSE BILL', button_color="green")])
 layout.append([sg.Text(key='-bill-', text_color="yellow")])
 layout.append([sg.Text('TOTAL: ', text_color="yellow"), sg.Input("", key='-ORDER-')])
-layout.append([sg.Checkbox('parcel it?', default=False,key="is_parcel")])
+layout.append([sg.Checkbox('take away?', default=False,key="is_parcel")])
 layout.append([sg.Button('ORDER',button_color="green")])
 layout.append([sg.Text(key='-ttt-', text_color="white")])
 layout.append([sg.Button('My Orders')])
 layout.append([sg.Cancel(button_color="green")])
-window = sg.Window('FC ORDER SYSTEM', layout,icon=r'C:\Users\chsai\Desktop\folder_locker\enc.ico', size=(1000, 900))
+window = sg.Window('CANTEEN ORDER SYSTEM', layout,icon=r'C:\Users\chsai\Desktop\folder_locker\enc.ico', size=(1000, 900))
 while True:
     event, values = window.read()
     if event is None or event == 'Cancel':
