@@ -1,0 +1,8 @@
+pymongo
+PySimpleGUI
+qrcode
+tinydb
+Pillow
+numpy
+pyzbar
+opencv-python
