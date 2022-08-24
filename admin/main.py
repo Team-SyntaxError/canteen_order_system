@@ -12,7 +12,6 @@ for x in all:
 tokens=get_tokens()
 plain_receipes=[]
 lst=[]
-
 for x in recipes:
     plain_receipes.append(x)
     nme=x.ljust(24," ")
@@ -96,4 +95,3 @@ while True:
                         update_recipe_price({x:values.get(f"{x}_price")})
                         window[f"-{x}_price-"].update(nme1)
                         window["-update-"].update("Server updated successfully.")
-        
