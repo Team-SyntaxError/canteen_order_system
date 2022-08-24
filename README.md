@@ -33,7 +33,7 @@ The repo comprises of 3 folders, they are client, scanner and admin.
 - The admin has a option to tag any item as special, so its diaplayed under "special items" category for customer.
 - The customer has a option to tag a order as take away.
 
-## Made By : Syntax error
+## Made By : SyntaxError
 - [Sai Ujwal](https://github.com/chsaiujwal)
 - [Sai Vardhan](https://github.com/saivardhan96)
 - Akanksha
